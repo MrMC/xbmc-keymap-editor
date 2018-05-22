@@ -19,6 +19,7 @@ import xml.etree.ElementTree as ET
 import json
 import xbmc
 import xbmcaddon
+import xbmcvfs
 
 tr = xbmcaddon.Addon().getLocalizedString
 
@@ -58,4 +59,7 @@ def write_keymap(keymap, filename):
         builder.end(context)
     builder.end("keymap")
     element = builder.close()
-    ET.ElementTree(element).write(filename, 'utf-8')
+    xmlstr = ET.tostring(element, encoding='utf8', method='xml')
+    f = xbmcvfs.File(filename, 'w')
+    result = f.write(xmlstr)
+    f.close()
