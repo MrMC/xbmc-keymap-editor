@@ -111,7 +111,17 @@ class KeyListener(WindowXMLDialog):
 
     def onAction(self, action):
         code = action.getButtonCode()
-        self.key = None if code == 0 else str(code)
+        if (code == 0):
+            self.key = None
+        else:
+           # mask out KEY_VKEY flags, KEY_VKEY's
+            # are stange, keymaps use lowercase
+            # and get converted to KEY_VKEY's which
+            # are uppercase. So we want lowercase.
+            if ((code & 0xF000) == 0xF000):
+                self.key = chr(code & 0x0FFF).lower()
+            else:
+                self.key = str(code)
         self.close()
 
     @staticmethod
