@@ -104,9 +104,11 @@ class KeyListener(WindowXMLDialog):
     def onInit(self):
         try:
             self.getControl(401).addLabel(tr(30002))
-            self.getControl(402).addLabel(tr(30010) % self.TIMEOUT)
         except AttributeError:
             self.getControl(401).setLabel(tr(30002))
+        try:
+            self.getControl(402).addLabel(tr(30010) % self.TIMEOUT)
+        except AttributeError:
             self.getControl(402).setLabel(tr(30010) % self.TIMEOUT)
 
     def onAction(self, action):
